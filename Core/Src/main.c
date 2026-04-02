@@ -130,8 +130,8 @@ int main(void)
     LL_mDelay(10);
     
 
-    tft180_BufferShow_int(0, 0, speed, 9, TFT180_8X16_FONT);
-    tft180_BufferShow_int(0, 16, location, 9, TFT180_8X16_FONT);
+    // tft180_BufferShow_int(0, 0, speed, 9, TFT180_8X16_FONT);
+    // tft180_BufferShow_int(0, 16, location, 9, TFT180_8X16_FONT);
     // tft180_BufferShow_uint(0, 32, data, 5, TFT180_8X16_FONT);
 
 
