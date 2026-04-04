@@ -567,7 +567,7 @@ void func_double_to_str(char *str, double number, uint8_t piont_bit)
         bit--;
     }
     data_point = (int)number;
-
+    //比如0.09  但是经过这步 data_point 会显示的是9 而不是09；
 
     do
     {
@@ -590,10 +590,11 @@ void func_double_to_str(char *str, double number, uint8_t piont_bit)
         else
         {
             *str++ = '.';
-            while (data_point != 0)
+            while (piont_bit != 0)
             {
                 data_pointbuffer[bit++] = data_point % 10;
                 data_point /= 10;
+                piont_bit--;
             }
             while (bit != 0)
             {

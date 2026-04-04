@@ -215,7 +215,7 @@ void TIM1_UP_IRQHandler(void)
     {
       count = 0;
       speed = Encode_Get() ;  // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
-      location += speed;
+
     }
     
   }

@@ -59,9 +59,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-volatile int8_t speed = 0;
 
-volatile int16_t location = 0;
 
 uint8_t flag;
 // int num1, num2;
@@ -112,9 +110,9 @@ int main(void)
   Menu_Init();
   Encode_Init();
 
-  uint16_t data;
+  
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&data, 1);
-
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -123,7 +121,7 @@ int main(void)
   {
     tft180_BufferClean();
     Serial_Printf("%d\r\n", data);
-
+    Servo_SetSpeed(PWM);
     Menu_Choose();
 
     tft180_Buffer_Updata();
