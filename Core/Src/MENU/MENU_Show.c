@@ -128,14 +128,15 @@ void Menu_Show_Key(void)
 #if !USE_WUWU_UI
         if (s == key)
         {
-            menu_show_string(0, (i) * Font_Hight, "->");
+            menu_show_string(0, (i)*Font_Hight, "->");
         }
-     
+
         //     +CURSOR_UI_LEN;
         // key_ui.IMG.tarWide = key_ui.IMG.wide;
-    else{
-        menu_show_string(0, (i) * Font_Hight, "  ");
-    } 
+        else
+        {
+            menu_show_string(0, (i)*Font_Hight, "  ");
+        }
 #else
         if (Setup_mode != 1 && key->select != true)
         {
@@ -229,9 +230,7 @@ void Menu_Show_Number(void)
 
         case float_Box:
             if (*(float *)s->data > 10) // -1 依旧给'>'创建机会   -3 是为了给'.'以及后面两位创建机会
-            {
                 menu_show_float(Font_Width * (Collum_Sum_len - Number_Len - 1), i * Font_Hight + Show_Start_y, *(float *)s->data, Number_Len - 3, 2);
-            }
             else
                 menu_show_float(Font_Width * (Collum_Sum_len - Number_Len - 1), i * Font_Hight + Show_Start_y, *(float *)s->data, Number_Len - 4, 2);
             break;
