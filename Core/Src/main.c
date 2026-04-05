@@ -122,7 +122,6 @@ int main(void)
     // last_adc_normalized = adc_normalized;
     // adc_normalized = (float)data/ 4036.0f; 
     // adc_change = adc_normalized - last_adc_normalized;
-
     tft180_BufferClean();
     Serial_Printf("%f,%f,%f\r\n", Target,Actual,Out);
     Menu_Choose();

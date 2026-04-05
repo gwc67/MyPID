@@ -34,13 +34,13 @@ static float SetupNumber[SETUP_LEN] = {0.001, 0.01, 0.1, 1, 10, 100, 1000};
 static uint8_t SetupIndex = 1;
 uint8_t Setup_mode = 0;
 
-float Ki = 0.0;
-float Kp = 0.0;
+float Kp = 0.2;
+float Ki = 0.1;
 float Kd = 0.0;
 volatile float Target,Actual,Out;
 uint16_t data;
 int8_t PWM;
-float error0 ,error1,errorInt;   //本次误差，上次误差，误差积分
+float error0 ,error1,error2;   //本次误差，上次误差，误差积分
 
 void Menu_Init(void)
 { // metamorphosis

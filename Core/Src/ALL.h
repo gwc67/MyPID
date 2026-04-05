@@ -16,7 +16,7 @@
 #include "MENU.h"
 #include "stdbool.h"
 
-extern float error0 ,error1,errorInt;   
+extern float error0 ,error1,error2;   
 extern uint16_t data;
 extern int8_t PWM;
 extern volatile float Target;
