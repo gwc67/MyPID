@@ -214,7 +214,7 @@ void TIM1_UP_IRQHandler(void)
     if (count >= 40)
     {
       count = 0;
-      Actual = Encode_Get(); // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
+      Actual += Encode_Get(); // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
 
       error2 = error1;
       error1 = error0;
@@ -241,6 +241,6 @@ void TIM1_UP_IRQHandler(void)
   /* USER CODE END TIM1_UP_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
+/* USER CODE BEGIN 1 */ 
 
 /* USER CODE END 1 */
