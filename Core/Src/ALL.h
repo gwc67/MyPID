@@ -16,11 +16,13 @@
 #include "MENU.h"
 #include "stdbool.h"
 
-extern volatile int8_t speed;
+extern float error0 ,error1,errorInt;   
 extern uint16_t data;
 extern int8_t PWM;
-extern float Target;
-extern float Actual;
-extern float Out;
-
+extern volatile float Target;
+extern volatile float Actual;
+extern volatile float Out;
+extern float Kp ;
+extern float Ki ;
+extern float Kd ;
 #endif
