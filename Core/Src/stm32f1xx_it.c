@@ -213,10 +213,9 @@ void TIM1_UP_IRQHandler(void)
     Key_Tick();
     if (count >= 40)
     {
-      count = 0;
-      actual1 = Actual;
+      count = 0;  
       Actual += Encode_Get(); // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
-
+      Actual += rand() % 41 - 20 ;
       error1 = error0;
       Target = -(data / 4035.0 * 2000 - 1000);
       error0 = Target - Actual;
@@ -227,7 +226,8 @@ void TIM1_UP_IRQHandler(void)
       else{
         errorInt = 0;
       }
-      diffout =- Kd * (Actual - actual1);
+      float a = 0.9;
+      diffout = (1 - a ) * Kd * (error0 - error1) + a * diffout;
 
       Out = Kp * error0 + Ki * errorInt + diffout;
       if (Out > 100)
