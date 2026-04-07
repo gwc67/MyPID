@@ -16,14 +16,13 @@
 #include "MENU.h"
 #include "stdbool.h"
 #include "math.h"
-extern float diffout ;
-extern float error0 ,error1,errorInt;   
 extern uint16_t data;
-extern int8_t PWM;
-extern volatile float Target;
-extern volatile float Actual;
-extern volatile float Out;
-extern float Kp ;
-extern float Ki ;
-extern float Kd ;
+extern float Inner_Ki, Inner_Kp, Inner_Kd;
+extern volatile float Inner_Target, Inner_Actual,Inner_Out;
+extern float Inner_error0, Inner_error1, Inner_errorInt; // 本次误差，上次误差，误差积分
+extern float Out_Ki, Out_Kp, Out_Kd;
+extern volatile float Out_Target, Out_Actual,Out_Out;
+extern float Out_error0, Out_error1, Out_errorInt; // 本次误差，上次误差，误差积分
+extern int16_t Speed, Location;
+
 #endif

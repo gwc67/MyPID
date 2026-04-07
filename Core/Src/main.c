@@ -124,7 +124,8 @@ int main(void)
     // adc_change = adc_normalized - last_adc_normalized;
 
     tft180_BufferClean();
-    Serial_Printf("%f,%f,%f,%f\r\n", Target,Actual,Out,diffout);
+    Serial_Printf("%f,%f,%f\r\n", Out_Target,Out_Actual,Out_Out);
+    // Serial_Printf("%f,%f,%f,%f\r\n", Inner_Target,Inner_Actual,Inner_Out);
     Menu_Choose();
  
     tft180_Buffer_Updata();

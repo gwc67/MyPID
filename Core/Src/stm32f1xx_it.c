@@ -205,41 +205,70 @@ void SysTick_Handler(void)
 void TIM1_UP_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM1_UP_IRQn 0 */
-  static uint8_t count = 0;
+  static uint8_t count1, count2;
   if (LL_TIM_IsActiveFlag_UPDATE(TIM1) == 1)
   {
-    count++;
+    count1++;
     LL_TIM_ClearFlag_UPDATE(TIM1);
     Key_Tick();
-    if (count >= 40)
+    if (count1 >= 40)
     {
-      count = 0;  
-      Actual += Encode_Get(); // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
-      Actual += rand() % 41 - 20 ;
-      error1 = error0;
-      Target = -(data / 4035.0 * 2000 - 1000);
-      error0 = Target - Actual;
-      if (Ki != 0 && -500 < errorInt < 500)
-      {
-        errorInt += error0;
-      }
-      else{
-        errorInt = 0;
-      }
-      float a = 0.9;
-      diffout = (1 - a ) * Kd * (error0 - error1) + a * diffout;
+      count1 = 0;
+      Speed = Encode_Get(); // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
+      Location += Speed;
+      Inner_Actual = Speed;
+      Inner_error1 = Inner_error0;
+      // Inner_Target = -(data / 4035.0 * 800 - 400);
+      Inner_error0 = Inner_Target - Inner_Actual;
 
-      Out = Kp * error0 + Ki * errorInt + diffout;
-      if (Out > 100)
+      if (Inner_Ki != 0)
       {
-        Out = 100;
+        Inner_errorInt += Inner_error0;
       }
-      else if (Out < -100)
+      else
+      { 
+        Inner_errorInt = 0;
+      }
+      Inner_Out = Inner_Kp * Inner_error0 + Inner_Ki * Inner_errorInt + Inner_Kd * (Inner_error0 - Inner_error1);
+      if (Inner_Out > 100)
       {
-        Out = -100;
+        Inner_Out = 100;
+      }
+      else if (Inner_Out < -100)
+      {
+        Inner_Out = -100;
       }
 
-      Servo_SetSpeed(Out);
+      Servo_SetSpeed(Inner_Out);
+    }
+    count2++;
+    if (count2 >= 40)
+    {
+      count2 = 0;
+      Out_Actual = Location; // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
+      Out_error1 = Out_error0;
+      Out_Target = -(data / 4035.0 * 2000 - 1000);
+      Out_error0 = Out_Target - Out_Actual;
+
+      if (Out_Ki != 0)
+      {
+        Out_errorInt += Out_error0;
+      }
+      else
+      {
+        Out_errorInt = 0;
+      }
+      Out_Out = Out_Kp * Out_error0 + Out_Ki * Out_errorInt + Out_Kd * (Out_error0 - Out_error1);
+      if (Out_Out > 100)
+      {
+        Out_Out = 100;
+      }
+      else if (Out_Out < -100)
+      {
+        Out_Out = -100;
+      }
+
+      Inner_Target = Out_Out;
     }
   }
   /* USER CODE END TIM1_UP_IRQn 0 */

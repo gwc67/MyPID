@@ -34,14 +34,15 @@ static float SetupNumber[SETUP_LEN] = {0.001, 0.01, 0.1, 1, 10, 100, 1000};
 static uint8_t SetupIndex = 1;
 uint8_t Setup_mode = 0;
 
-float Ki = 0.0;
-float Kp = 0.0;
-float Kd = 0.0;
-float diffout;
-volatile float Target,Actual,Out;
 uint16_t data;
-int8_t PWM;
-float error0 ,error1,errorInt;   //本次误差，上次误差，误差积分
+float Inner_Ki = 0.1, Inner_Kp = 0.3, Inner_Kd;
+volatile float Inner_Target, Inner_Actual, Inner_Out;
+float Inner_error0, Inner_error1, Inner_errorInt; // 本次误差，上次误差，误差积分
+float Out_Ki, Out_Kp, Out_Kd;
+volatile float Out_Target, Out_Actual, Out_Out;
+float Out_error0, Out_error1, Out_errorInt; // 本次误差，上次误差，误差积分
+
+int16_t Speed,Location;
 
 void Menu_Init(void)
 { // metamorphosis
@@ -55,16 +56,20 @@ void Menu_Init(void)
     head.name = "Menu";
     head.kind = MENU_Folder;
 
-
-    dynamicCreate_Menu_Number(&head, "Ki", &Ki, float_Box);
-    dynamicCreate_Menu_Number(&head, "Kp", &Kp, float_Box);
-    dynamicCreate_Menu_Number(&head, "Kd", &Kd, float_Box);
-    dynamicCreate_Menu_Number(&head, "AD1", &data, uint16_Box);
-    dynamicCreate_Menu_LimitNumberBox( &head,"PWM",&PWM,int8_Box,-100,100);
-    dynamicCreate_Menu_Number(&head,"Target",(float*)&Target,float_Box);
-    dynamicCreate_Menu_Number(&head,"Actual",(float*)&Actual,float_Box);
-    dynamicCreate_Menu_LimitNumberBox(&head,"Out",(float*)&Out,float_Box,-100,100);
-    // dynamicCreate_Menu_Number(&head,"adc_change",&adc_change,float_Box);    
+    dynamicCreate_Menu_Number(&head, "Inner_Kp", &Inner_Kp, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Ki", &Inner_Ki, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Kd", &Inner_Kd, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Target", (float *)&Inner_Target, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Actual", (float *)&Inner_Actual, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Out", (float *)&Inner_Out, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Kp", &Out_Kp, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Ki", &Out_Ki, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Kp", &Out_Kp, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Target", (float *)&Out_Target, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Actual", (float *)&Out_Actual, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Out", (float *)&Out_Out, float_Box);
+    dynamicCreate_Menu_Number(&head, "AD", &data, uint16_Box);
+    // dynamicCreate_Menu_Number(&head,"adc_change",&adc_change,float_Box);
 
     Circle_Menu(&head);
 
