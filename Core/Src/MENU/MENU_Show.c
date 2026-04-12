@@ -37,6 +37,7 @@ uint8_t Setup_mode = 0;
 float Ki = 0.0;
 float Kp = 0.0;
 float Kd = 0.0;
+float diffout ,actual1;
 volatile float Target,Actual,Out;
 uint16_t data;
 int8_t PWM;
