@@ -214,21 +214,19 @@ void TIM1_UP_IRQHandler(void)
     if (count >= 40)
     {
       count = 0;
-      Actual = Encode_Get(); // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
+      Actual += Encode_Get(); // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
 
       error1 = error0;
-      Target = data / 4035.0 * 500;
+      Target = -(data / 4035.0 * 2000 - 1000);
       error0 = Target - Actual;
 
       errorInt += error0;
-
-      if (errorInt > 500)
+      if ( fabs(errorInt) < 100.0 )
       {
-        errorInt = 500;
+        errorInt += error0;
       }
-      else if (errorInt < -500)
-      {
-        errorInt = -500;
+      else{
+        errorInt = 0 ;
       }
 
       Out = Kp * error0 + Ki * errorInt + Kd * (error0 - error1);

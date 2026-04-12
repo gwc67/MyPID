@@ -17,7 +17,7 @@
 #define Show_Start_y (0)
 #define Collum_Sum_len (21) // 还余了2个像素的宽度
 #define Name_Len (10)
-#define Number_Len (7)
+#define Number_Len (8)
 #define EVERY_FOLDER_NUMBER (15) // 每页文件数量限制sssd
 
 MENU head;
