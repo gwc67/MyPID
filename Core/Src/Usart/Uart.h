@@ -4,7 +4,9 @@
 #include "ALL.h"
 #include "Uart.h"
 
-void Serial_SendByte(uint8_t Byte);
+//替换Serial_SendByte 后面的函数
+
+void Serial_SendByte_LL(uint8_t Byte);
 
 void Serial_SendArray(uint8_t Array[], uint16_t lenth);
 

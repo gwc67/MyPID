@@ -2,7 +2,7 @@
 #define __SERVO_H
 
 //note : 引脚命名为 AIN1 ， AIN2
-
+// 修改Servo_Time
 
 #include "ALL.h"
 
