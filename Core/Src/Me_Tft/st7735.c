@@ -571,11 +571,11 @@ void func_double_to_str(char *str, double number, uint8_t piont_bit)
 
     do
     {
-        while (data_temp != 0)
+        do 
         {
             data_buffer[bit++] = data_temp % 10;
             data_temp /= 10;
-        }
+        }while (data_temp != 0);
         while (bit != 0)
         {
             *str++ =( data_buffer[bit - 1] + 0x30);
