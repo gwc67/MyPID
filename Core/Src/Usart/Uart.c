@@ -1,11 +1,16 @@
 #include "Uart.h"
 
-void Serial_SendByte(uint8_t Byte)
+#define MyUSART USART1
+
+void Serial_SendByte_LL(uint8_t Byte)
 {
-    LL_USART_TransmitData8(USART1, Byte);
-    while (LL_USART_IsActiveFlag_TXE(USART1) == RESET)
+    LL_USART_TransmitData8(MyUSART, Byte);
+    while (LL_USART_IsActiveFlag_TXE(MyUSART) == RESET)
         ;
 }
+
+#define Serial_SendByte(Byte)  Serial_SendByte_LL(Byte)
+
 
 void Serial_SendArray(uint8_t Array[], uint16_t lenth)
 {

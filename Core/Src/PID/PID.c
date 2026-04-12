@@ -1,5 +1,6 @@
 #include "PID.h"
 
+// 该函数的本质：Update此时的PID输出Out，得到Out；
 void PID_Update(PID_t* p)
 {
     p->Error1 = p->Error0;

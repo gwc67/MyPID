@@ -226,7 +226,7 @@ void TIM1_UP_IRQHandler(void)
       count2 = 0;
       Outer.Actual = Location; // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
       Outer.Target = -(data / 4035.0 * 2000 - 1000);
-      PID_Update(&Outer);
+      PID_Update(&Outer); 
       Inner.Target = Outer.Out;
     }
   }
