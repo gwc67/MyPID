@@ -34,11 +34,10 @@ static float SetupNumber[SETUP_LEN] = {0.001, 0.01, 0.1, 1, 10, 100, 1000};
 static uint8_t SetupIndex = 3;
 uint8_t Setup_mode = 0;
 
-int test = 10;
-float test1 = 2.2;
-bool test2 = false;
-float test3 = 3.3;
-float test4 = 3.5;
+float Ki = 0.2;
+float Kp = 0.3;
+float Kd = 0.4;
+
 void Menu_Init(void)
 { // metamorphosis
     head.data = NULL;
@@ -51,19 +50,12 @@ void Menu_Init(void)
     head.name = "Menu";
     head.kind = MENU_Folder;
 
-    MENU *Folder1 = dynamicCreate_Menu_Folder(&head, "Folder1");
+    MENU *Folder1 = dynamicCreate_Menu_Folder(&head, "PID");
     MENU *Folder2 = dynamicCreate_Menu_Folder(&head, "Folder2");
-    dynamicCreate_Menu_Folder(Folder2, "Folder3");
-    dynamicCreate_Menu_Folder(Folder2, "Folder4");
-    dynamicCreate_Menu_Folder(Folder2, "Folder5");
+    dynamicCreate_Menu_Number(Folder1, "Ki", &Ki, float_Box);
+    dynamicCreate_Menu_Number(Folder1, "Kp", &Kp, float_Box);
+    dynamicCreate_Menu_Number(Folder1, "Kd", &Kd, float_Box);
 
-    dynamicCreate_Menu_Number(Folder1, "aaa", &test, int32_Box);
-    dynamicCreate_Menu_Number(Folder1, "bbb", &test1, float_Box);
-    dynamicCreate_Menu_Number(Folder1, "eee", &test4, float_Box);
-    dynamicCreate_Menu_Number(Folder1, "ddd", &test3, float_Box);
-    dynamicCreate_Menu_Number(Folder1, "ccc", &test2, bool_Box);
-    dynamicCreate_Menu_LimitNumberBox(Folder1, "u8_n", &u8_n, uint8_Box, 0, 100);
-    MENU *Folder6 = dynamicCreate_Menu_Folder(Folder1, "Folder6");
     Circle_Menu(&head);
 
     key = head.child;
@@ -114,13 +106,16 @@ static void Menu_Show_Setup(void)
     tmpchar[SETUP_NUMBER_LEN] = '\0';
     menu_show_string(Collum_Sum_len * Font_Width - Font_Width * SETUP_NUMBER_LEN, Show_Start_y, tmpchar);
 
-    //设置步长这里
+    // 设置步长这里
     if (Setup_mode == 1)
     {
-        set_ui_tarHW(Font_Hight,strlen(tmpchar)*Font_Width,&key_ui);
-        set_ui_tarXY(Collum_Sum_len * Font_Width - Font_Width * SETUP_NUMBER_LEN, Show_Start_y,&key_ui);
+#if USE_WUWU_UI
+        set_ui_tarHW(Font_Hight, strlen(tmpchar) * Font_Width, &key_ui);
+        set_ui_tarXY(Collum_Sum_len * Font_Width - Font_Width * SETUP_NUMBER_LEN, Show_Start_y, &key_ui);
+#else
+
+#endif
     }
-    
 }
 
 void Menu_Show_Key(void)
@@ -133,15 +128,18 @@ void Menu_Show_Key(void)
 #if !USE_WUWU_UI
         if (s == key)
         {
-            menu_show_string(0, (i + 1) * Font_Hight, "->");
+            menu_show_string(0, (i) * Font_Hight, "->");
         }
-        else + CURSOR_UI_LEN;
-    key_ui.IMG.tarWide = key_ui.IMG.wide;
-            menu_show_string(0, (i + 1) * Font_Hight, "  ");
+     
+        //     +CURSOR_UI_LEN;
+        // key_ui.IMG.tarWide = key_ui.IMG.wide;
+    else{
+        menu_show_string(0, (i) * Font_Hight, "  ");
+    } 
 #else
         if (Setup_mode != 1 && key->select != true)
         {
-            if (s == key )
+            if (s == key)
             {
                 set_ui_tarXY(0, Font_Hight * i + Show_Start_y, &key_ui);
                 set_ui_tarHW(Font_Hight, Font_Width * (strlen(key->name)) + CURSOR_UI_LEN, &key_ui);
@@ -208,7 +206,7 @@ static void Menu_Show_task(void)
     {
         tmpchar[j] = ' ';
     }
-    tmpchar[EVERY_FOLDER_NUMBER] = '\0';
+    tmpchar[Name_Len] = '\0';
     for (int i = key->parent->Sons + 1; i <= EVERY_FOLDER_NUMBER; i++)
     {
         menu_show_string(Font_Width * 2, Show_Start_y + Font_Hight * i, tmpchar);
@@ -223,7 +221,7 @@ void Menu_Show_Number(void)
     MENU *s = h->child;
 
     /* char buf[Name_Len + 3]; */
-    for (int i = 1; i < h->Sons; i++)
+    for (int i = 1; i <= h->Sons; i++)
     {
 
         switch (s->kind)
@@ -271,19 +269,17 @@ void Menu_Show_Number(void)
         }
         if (s->select == true && Setup_mode != 1)
         {
-            // menu_show_char((Collum_Sum_len - 1) * Font_Width, i * Font_Hight + Show_Start_y, '>');
-            // menu_show_char((Collum_Sum_len - Number_Len - 2) * Font_Width, i * Font_Hight, '<');
-
-            
-            set_ui_tarHW(Font_Hight, Font_Width*Number_Len, &key_ui);
-            set_ui_tarXY((Collum_Sum_len - Number_Len - 1) * Font_Width, i * Font_Hight, &key_ui);
+            menu_show_char((Collum_Sum_len - 1) * Font_Width, i * Font_Hight + Show_Start_y, '>');
+            menu_show_char((Collum_Sum_len - Number_Len - 2) * Font_Width, i * Font_Hight, '<');
+            //     set_ui_tarHW(Font_Hight, Font_Width*Number_Len, &key_ui);
+            //     set_ui_tarXY((Collum_Sum_len - Number_Len - 1) * Font_Width, i * Font_Hight, &key_ui);
         }
-        // else if (s->select == false && s->kind != MENU_Folder)
-        // {
-        //     menu_show_char((Collum_Sum_len - 1) * Font_Width, i * Font_Hight + Show_Start_y, ' ');
-        //     menu_show_char((Collum_Sum_len - Number_Len - 2) * Font_Width, i * Font_Hight, ' ');
-        // }
-        /* BSP_LCD_DisplayStringAt(Font_Width * 2, (i + 1) * Font_Hight, (uint8_t *)s->name, LEFT_MODE); */
+        else if (s->select == false && s->kind != MENU_Folder)
+        {
+            menu_show_char((Collum_Sum_len - 1) * Font_Width, i * Font_Hight + Show_Start_y, ' ');
+            menu_show_char((Collum_Sum_len - Number_Len - 2) * Font_Width, i * Font_Hight, ' ');
+        }
+
         s = s->next;
     }
 }
@@ -637,7 +633,7 @@ void Key_Enter(void)
 void Menu_Choose(void)
 {
 
-    if (Key_Check(KEY_1, KEY_SINGLE)|| Key_Check(KEY_1, KEY_REPEAT))
+    if (Key_Check(KEY_1, KEY_SINGLE) || Key_Check(KEY_1, KEY_REPEAT))
     {
         Key_Up();
     }
@@ -645,7 +641,7 @@ void Menu_Choose(void)
     {
         Key_Down();
     }
-    else if (Key_Check(KEY_3, KEY_SINGLE)|| Key_Check(KEY_3, KEY_REPEAT))
+    else if (Key_Check(KEY_3, KEY_SINGLE) || Key_Check(KEY_3, KEY_REPEAT))
     {
         Key_Enter();
     }
@@ -653,7 +649,7 @@ void Menu_Choose(void)
     // {
     //     Key_Enter();
     // }
-    else if (Key_Check(KEY_4, KEY_SINGLE)|| Key_Check(KEY_4, KEY_REPEAT))
+    else if (Key_Check(KEY_4, KEY_SINGLE) || Key_Check(KEY_4, KEY_REPEAT))
     {
         Menu_Show_KeyBack();
     }

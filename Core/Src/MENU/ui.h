@@ -5,7 +5,7 @@
 #include "st7735.h"
 #include "key.h"
 #include "stdlib.h"
-#define USE_WUWU_UI 1
+#define USE_WUWU_UI 0
 
 
 extern const uint8_t IMG_Setting[];
