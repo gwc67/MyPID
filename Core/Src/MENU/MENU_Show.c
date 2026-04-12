@@ -37,6 +37,10 @@ uint8_t Setup_mode = 0;
 float Ki = 0.2;
 float Kp = 0.3;
 float Kd = 0.4;
+float Target,Actual,Out;
+uint16_t data;
+int8_t PWM;
+volatile int8_t speed;
 
 void Menu_Init(void)
 { // metamorphosis
@@ -55,6 +59,13 @@ void Menu_Init(void)
     dynamicCreate_Menu_Number(Folder1, "Ki", &Ki, float_Box);
     dynamicCreate_Menu_Number(Folder1, "Kp", &Kp, float_Box);
     dynamicCreate_Menu_Number(Folder1, "Kd", &Kd, float_Box);
+    dynamicCreate_Menu_Number(Folder1, "AD1", &data, uint16_Box);
+    dynamicCreate_Menu_LimitNumberBox( Folder1,"PWM",&PWM,int8_Box,-100,100);
+    dynamicCreate_Menu_Number(Folder1,"speed",(void*)&speed,int8_Box);
+    dynamicCreate_Menu_Number(Folder1,"Target",&Target,float_Box);
+    dynamicCreate_Menu_Number(Folder1,"Actual",&Actual,float_Box);
+    dynamicCreate_Menu_Number(Folder1,"Out",&Out,float_Box);
+    
 
     Circle_Menu(&head);
 

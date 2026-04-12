@@ -13,9 +13,14 @@
 #include "stdio.h"
 #include "stdint.h"
 #include "stdarg.h"
+#include "MENU.h"
+#include "stdbool.h"
+
 extern volatile int8_t speed;
-
-extern volatile int16_t location;
-
+extern uint16_t data;
+extern int8_t PWM;
+extern float Target;
+extern float Actual;
+extern float Out;
 
 #endif
