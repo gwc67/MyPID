@@ -16,7 +16,7 @@
 #include "MENU.h"
 #include "stdbool.h"
 #include "math.h"
-extern float diffout , actual1;
+extern float diffout ;
 extern float error0 ,error1,errorInt;   
 extern uint16_t data;
 extern int8_t PWM;
