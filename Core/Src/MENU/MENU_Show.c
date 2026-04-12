@@ -31,16 +31,16 @@ uint8_t u8_n = 0;
 #define SETUP_LEN (7)
 #define SETUP_NUMBER_LEN (7)
 static float SetupNumber[SETUP_LEN] = {0.001, 0.01, 0.1, 1, 10, 100, 1000};
-static uint8_t SetupIndex = 3;
+static uint8_t SetupIndex = 1;
 uint8_t Setup_mode = 0;
 
-float Ki = 0.2;
-float Kp = 0.3;
-float Kd = 0.4;
-float Target,Actual,Out;
+float Ki = 0.0;
+float Kp = 0.0;
+float Kd = 0.0;
+volatile float Target,Actual,Out;
 uint16_t data;
 int8_t PWM;
-volatile int8_t speed;
+float error0 ,error1,errorInt;   //本次误差，上次误差，误差积分
 
 void Menu_Init(void)
 { // metamorphosis
@@ -54,18 +54,16 @@ void Menu_Init(void)
     head.name = "Menu";
     head.kind = MENU_Folder;
 
-    MENU *Folder1 = dynamicCreate_Menu_Folder(&head, "PID");
-    MENU *Folder2 = dynamicCreate_Menu_Folder(&head, "Folder2");
-    dynamicCreate_Menu_Number(Folder1, "Ki", &Ki, float_Box);
-    dynamicCreate_Menu_Number(Folder1, "Kp", &Kp, float_Box);
-    dynamicCreate_Menu_Number(Folder1, "Kd", &Kd, float_Box);
-    dynamicCreate_Menu_Number(Folder1, "AD1", &data, uint16_Box);
-    dynamicCreate_Menu_LimitNumberBox( Folder1,"PWM",&PWM,int8_Box,-100,100);
-    dynamicCreate_Menu_Number(Folder1,"speed",(void*)&speed,int8_Box);
-    dynamicCreate_Menu_Number(Folder1,"Target",&Target,float_Box);
-    dynamicCreate_Menu_Number(Folder1,"Actual",&Actual,float_Box);
-    dynamicCreate_Menu_Number(Folder1,"Out",&Out,float_Box);
-    
+
+    dynamicCreate_Menu_Number(&head, "Ki", &Ki, float_Box);
+    dynamicCreate_Menu_Number(&head, "Kp", &Kp, float_Box);
+    dynamicCreate_Menu_Number(&head, "Kd", &Kd, float_Box);
+    dynamicCreate_Menu_Number(&head, "AD1", &data, uint16_Box);
+    dynamicCreate_Menu_LimitNumberBox( &head,"PWM",&PWM,int8_Box,-100,100);
+    dynamicCreate_Menu_Number(&head,"Target",(float*)&Target,float_Box);
+    dynamicCreate_Menu_Number(&head,"Actual",(float*)&Actual,float_Box);
+    dynamicCreate_Menu_LimitNumberBox(&head,"Out",(float*)&Out,float_Box,-100,100);
+    // dynamicCreate_Menu_Number(&head,"adc_change",&adc_change,float_Box);    
 
     Circle_Menu(&head);
 
