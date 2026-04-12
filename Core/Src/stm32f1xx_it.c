@@ -216,59 +216,18 @@ void TIM1_UP_IRQHandler(void)
       count1 = 0;
       Speed = Encode_Get(); // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
       Location += Speed;
-      Inner_Actual = Speed;
-      Inner_error1 = Inner_error0;
-      // Inner_Target = -(data / 4035.0 * 800 - 400);
-      Inner_error0 = Inner_Target - Inner_Actual;
-
-      if (Inner_Ki != 0)
-      {
-        Inner_errorInt += Inner_error0;
-      }
-      else
-      { 
-        Inner_errorInt = 0;
-      }
-      Inner_Out = Inner_Kp * Inner_error0 + Inner_Ki * Inner_errorInt + Inner_Kd * (Inner_error0 - Inner_error1);
-      if (Inner_Out > 100)
-      {
-        Inner_Out = 100;
-      }
-      else if (Inner_Out < -100)
-      {
-        Inner_Out = -100;
-      }
-
-      Servo_SetSpeed(Inner_Out);
+      Inner.Actual = Speed;
+      PID_Update(&Inner);
+      Servo_SetSpeed(Inner.Out);
     }
     count2++;
     if (count2 >= 40)
     {
       count2 = 0;
-      Out_Actual = Location; // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
-      Out_error1 = Out_error0;
-      Out_Target = -(data / 4035.0 * 2000 - 1000);
-      Out_error0 = Out_Target - Out_Actual;
-
-      if (Out_Ki != 0)
-      {
-        Out_errorInt += Out_error0;
-      }
-      else
-      {
-        Out_errorInt = 0;
-      }
-      Out_Out = Out_Kp * Out_error0 + Out_Ki * Out_errorInt + Out_Kd * (Out_error0 - Out_error1);
-      if (Out_Out > 100)
-      {
-        Out_Out = 100;
-      }
-      else if (Out_Out < -100)
-      {
-        Out_Out = -100;
-      }
-
-      Inner_Target = Out_Out;
+      Outer.Actual = Location; // speed / 1040 =    (speed的单位 边沿数/40ms) 转每40ms
+      Outer.Target = -(data / 4035.0 * 2000 - 1000);
+      PID_Update(&Outer);
+      Inner.Target = Outer.Out;
     }
   }
   /* USER CODE END TIM1_UP_IRQn 0 */

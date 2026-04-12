@@ -77,6 +77,11 @@ virtualFolder:
                     - path: ../Core/Src/Usart/Uart.c
                     - path: ../Core/Src/Usart/Uart.h
                   folders: []
+                - name: PID
+                  files:
+                    - path: ../Core/Src/PID/PID.h
+                    - path: ../Core/Src/PID/PID.c
+                  folders: []
     - name: Drivers
       files:
         - path: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c
@@ -168,6 +173,7 @@ targets:
         - ../Core/Src/Me_Tft
         - ../Core/Src/Servo
         - ../Core/Src/Usart
+        - ../Core/Src/PID
       libList: []
     excludeList:
       - <virtual_root>/Application/User/Core/i2c.c

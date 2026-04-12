@@ -35,14 +35,24 @@ static uint8_t SetupIndex = 1;
 uint8_t Setup_mode = 0;
 
 uint16_t data;
-float Inner_Ki = 0.1, Inner_Kp = 0.3, Inner_Kd;
-volatile float Inner_Target, Inner_Actual, Inner_Out;
-float Inner_error0, Inner_error1, Inner_errorInt; // 本次误差，上次误差，误差积分
-float Out_Ki, Out_Kp, Out_Kd;
-volatile float Out_Target, Out_Actual, Out_Out;
-float Out_error0, Out_error1, Out_errorInt; // 本次误差，上次误差，误差积分
+PID_t Inner = {
+    .Kp = 0.3,
+    .Ki = 0.2,
+    .Kd = 0,
+    .OutMax = 100,
+    .OutMin = -100,
+};
 
-int16_t Speed,Location;
+PID_t Outer = {
+    .Kp = 0.3,
+    .Ki = 0,
+    .Kd = 0.3,
+    .OutMax = 100,
+    .OutMin = -100,
+};
+
+int16_t Speed,
+      Location;
 
 void Menu_Init(void)
 { // metamorphosis
@@ -56,18 +66,18 @@ void Menu_Init(void)
     head.name = "Menu";
     head.kind = MENU_Folder;
 
-    dynamicCreate_Menu_Number(&head, "Inner_Kp", &Inner_Kp, float_Box);
-    dynamicCreate_Menu_Number(&head, "Inner_Ki", &Inner_Ki, float_Box);
-    dynamicCreate_Menu_Number(&head, "Inner_Kd", &Inner_Kd, float_Box);
-    dynamicCreate_Menu_Number(&head, "Inner_Target", (float *)&Inner_Target, float_Box);
-    dynamicCreate_Menu_Number(&head, "Inner_Actual", (float *)&Inner_Actual, float_Box);
-    dynamicCreate_Menu_Number(&head, "Inner_Out", (float *)&Inner_Out, float_Box);
-    dynamicCreate_Menu_Number(&head, "Out_Kp", &Out_Kp, float_Box);
-    dynamicCreate_Menu_Number(&head, "Out_Ki", &Out_Ki, float_Box);
-    dynamicCreate_Menu_Number(&head, "Out_Kp", &Out_Kp, float_Box);
-    dynamicCreate_Menu_Number(&head, "Out_Target", (float *)&Out_Target, float_Box);
-    dynamicCreate_Menu_Number(&head, "Out_Actual", (float *)&Out_Actual, float_Box);
-    dynamicCreate_Menu_Number(&head, "Out_Out", (float *)&Out_Out, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Kp", &Inner.Kp, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Ki", &Inner.Ki, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Kd", &Inner.Kd, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Target", (float *)&Inner.Target, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Actual", (float *)&Inner.Actual, float_Box);
+    dynamicCreate_Menu_Number(&head, "Inner_Out", (float *)&Inner.Out, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Kp", &Outer.Kp, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Ki", &Outer.Ki, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Kd", &Outer.Kd, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Target", (float *)&Outer.Target, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Actual", (float *)&Outer.Actual, float_Box);
+    dynamicCreate_Menu_Number(&head, "Out_Out", (float *)&Outer.Out, float_Box);
     dynamicCreate_Menu_Number(&head, "AD", &data, uint16_Box);
     // dynamicCreate_Menu_Number(&head,"adc_change",&adc_change,float_Box);
 
