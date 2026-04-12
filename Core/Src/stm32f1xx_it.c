@@ -221,18 +221,14 @@ void TIM1_UP_IRQHandler(void)
       error0 = Target - Actual;
 
       errorInt += error0;
-      if ( fabs(errorInt) < 100.0 )
-      {
-        errorInt += error0;
-      }
-      else{
-        errorInt = 0 ;
-      }
+      float C = 1 / (1 * fabs(error0) + 1);
+
+      errorInt += C * error0;
 
       Out = Kp * error0 + Ki * errorInt + Kd * (error0 - error1);
       if (Out > 100)
       {
-        Out = 100; 
+        Out = 100;
       }
       else if (Out < -100)
       {
