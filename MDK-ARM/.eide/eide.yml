@@ -43,7 +43,11 @@ virtualFolder:
                     - path: ../Core/Src/Key/Key.c
                   folders: []
                 - name: Me_Tft
-                  files: []
+                  files:
+                    - path: ../Core/Src/Me_Tft/font.h
+                    - path: ../Core/Src/Me_Tft/font.c
+                    - path: ../Core/Src/Me_Tft/st7735.c
+                    - path: ../Core/Src/Me_Tft/st7735.h
                   folders: []
     - name: Drivers
       files:
