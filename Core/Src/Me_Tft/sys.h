@@ -3,7 +3,9 @@
 
 #include "main.h"
 
-//原子操作设置IO口的输入与输出；主要用于SCCB里输出与输入的快速转换
+//PAout(12) = 0, 实质为 0x422101B0 该地址下的寄存器 = 0 ， PA12 输出 低电平
+//PAout(12) = 1, 实质为 0x422101B0 该地址下的寄存器 = 1 ， PA12 输出 低电平
+//
 
 #define BITBAND(addr,bitnum)   ((addr & 0xF0000000) + 0x2000000 + (addr & 0xFFFFF) << 5 + (bitnum << 2))   // bitnum 即几号 io口
 #define MEM_ADDR(addr)          *((volatile unsigned long *)(addr))
