@@ -3,13 +3,13 @@
 
 #include "main.h"
 #include "sys.h"
-
+#include "delay.h"
 #define SCCB_SCL_PORT       GPIOA
 #define SCCB_SCL_PIN        GPIO_PIN_0
 #define SCCB_SDA_PORT       GPIOA
 #define SCCB_SDA_PIN        GPIO_PIN_1
 
-#define 
+#define dDelay_us(x)         delay_us(x)
 
 #define SCCB_SDA_IN()       {GPIOA->CRL &= 0xFFFFFF0F;GPIO->CRL |= 0x00000080;}
 #define SCCB_SDA_OUT()      {GPIOA->CRL &= 0xFFFFFF0F;GPIO->CRL |= 0x00000030;}    

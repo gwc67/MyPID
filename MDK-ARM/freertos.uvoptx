@@ -22,7 +22,7 @@
   </DaveTm>
 
   <Target>
-    <TargetName>MyPID</TargetName>
+    <TargetName>freertos</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

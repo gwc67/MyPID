@@ -44,7 +44,7 @@ void MX_SPI1_Init(void)
   PA5   ------> SPI1_SCK
   PA7   ------> SPI1_MOSI
   */
-  GPIO_InitStruct.Pin = LCD_SCK_Pin|LCD_MOSI_Pin;
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_5|LL_GPIO_PIN_7;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;

@@ -70,30 +70,32 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LCD_CS_Pin LL_GPIO_PIN_4
+#define LCD_CS_Pin GPIO_PIN_4
 #define LCD_CS_GPIO_Port GPIOA
-#define LCD_SCK_Pin LL_GPIO_PIN_5
+#define LCD_SCK_Pin GPIO_PIN_5
 #define LCD_SCK_GPIO_Port GPIOA
-#define LCD_MOSI_Pin LL_GPIO_PIN_7
+#define LCD_MOSI_Pin GPIO_PIN_7
 #define LCD_MOSI_GPIO_Port GPIOA
-#define LCD_RES_Pin LL_GPIO_PIN_0
+#define LCD_RES_Pin GPIO_PIN_0
 #define LCD_RES_GPIO_Port GPIOB
-#define LCD_DC_Pin LL_GPIO_PIN_1
+#define LCD_DC_Pin GPIO_PIN_1
 #define LCD_DC_GPIO_Port GPIOB
-#define LCD_BL_Pin LL_GPIO_PIN_10
+#define LCD_BL_Pin GPIO_PIN_10
 #define LCD_BL_GPIO_Port GPIOB
-#define Key1_Pin LL_GPIO_PIN_12
+#define Key1_Pin GPIO_PIN_12
 #define Key1_GPIO_Port GPIOB
-#define AIN2_Pin LL_GPIO_PIN_13
+#define AIN2_Pin GPIO_PIN_13
 #define AIN2_GPIO_Port GPIOB
-#define AIN1_Pin LL_GPIO_PIN_14
+#define AIN1_Pin GPIO_PIN_14
 #define AIN1_GPIO_Port GPIOB
-#define Key2_Pin LL_GPIO_PIN_15
+#define Key2_Pin GPIO_PIN_15
 #define Key2_GPIO_Port GPIOB
-#define Key3_Pin LL_GPIO_PIN_10
+#define Key3_Pin GPIO_PIN_10
 #define Key3_GPIO_Port GPIOA
-#define Key4_Pin LL_GPIO_PIN_15
+#define Key4_Pin GPIO_PIN_15
 #define Key4_GPIO_Port GPIOA
+#define RED_Pin GPIO_PIN_3
+#define RED_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
