@@ -42,45 +42,8 @@ virtualFolder:
                     - path: ../Core/Src/Key/Key.h
                     - path: ../Core/Src/Key/Key.c
                   folders: []
-                - name: MyFlash
-                  files:
-                    - path: ../Core/Src/MyFlash/Store.c
-                    - path: ../Core/Src/MyFlash/Store.h
-                    - path: ../Core/Src/MyFlash/MyFlash.c
-                    - path: ../Core/Src/MyFlash/MyFlash.h
-                  folders: []
                 - name: Me_Tft
-                  files:
-                    - path: ../Core/Src/Me_Tft/st7735.c
-                    - path: ../Core/Src/Me_Tft/st7735.h
-                    - path: ../Core/Src/Me_Tft/font.c
-                    - path: ../Core/Src/Me_Tft/font.h
-                  folders: []
-                - name: MENU
-                  files:
-                    - path: ../Core/Src/MENU/MENU.c
-                    - path: ../Core/Src/MENU/MENU_Show.c
-                    - path: ../Core/Src/MENU/MENU.h
-                    - path: ../Core/Src/MENU/MENU_Show.h
-                    - path: ../Core/Src/MENU/ui.c
-                    - path: ../Core/Src/MENU/ui.h
-                  folders: []
-                - name: Servo
-                  files:
-                    - path: ../Core/Src/Servo/Servo.c
-                    - path: ../Core/Src/Servo/Servo.h
-                    - path: ../Core/Src/Servo/Encode.c
-                    - path: ../Core/Src/Servo/Encode.h
-                  folders: []
-                - name: Usart
-                  files:
-                    - path: ../Core/Src/Usart/Uart.c
-                    - path: ../Core/Src/Usart/Uart.h
-                  folders: []
-                - name: PID
-                  files:
-                    - path: ../Core/Src/PID/PID.h
-                    - path: ../Core/Src/PID/PID.c
+                  files: []
                   folders: []
     - name: Drivers
       files:

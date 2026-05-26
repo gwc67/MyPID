@@ -102,16 +102,10 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  Servo_Init();
+ 
   Key_Init();
-  Store_Init();
-  tft180_init();
-  tft180_clear();
-  Menu_Init();
-  Encode_Init();
+ 
 
-  
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&data, 1);
   
   /* USER CODE END 2 */
 
@@ -119,16 +113,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // last_adc_normalized = adc_normalized;
-    // adc_normalized = (float)data/ 4036.0f; 
-    // adc_change = adc_normalized - last_adc_normalized;
-
-    tft180_BufferClean();
-    Serial_Printf("%f,%f,%f\n", Outer.Target,Outer.Actual,Outer.Out);
-    // Serial_Printf("%f,%f,%f,%f\r\n", Inner_Target,Inner_Actual,Inner_Out);
-    Menu_Choose();
  
-    tft180_Buffer_Updata();
 
     /* USER CODE END WHILE */
 
